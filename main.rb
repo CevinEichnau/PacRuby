@@ -110,7 +110,7 @@ def run
     f.think
     #f.set_at(e.x, e.y, e)
 
-    # draw the screeen again !
+    # draw the screeen again 
     system('clear')
     player.drop_items
     puts "x:#{player.x} y:#{player.y}"
