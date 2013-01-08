@@ -101,7 +101,7 @@ def run
       puts "SOMETHING ELSE: #{c.inspect}"
     end
 
-    # update the player movement
+    # update the player movement !!!
     f.move_object(x, y, player) do |old|
       f.check_movement(player, old)
     end
@@ -110,7 +110,7 @@ def run
     f.think
     #f.set_at(e.x, e.y, e)
 
-    # draw the screeen again 
+    # draw the screeen again !!!
     system('clear')
     player.drop_items
     puts "x:#{player.x} y:#{player.y}"
