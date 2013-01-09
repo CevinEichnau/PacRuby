@@ -48,30 +48,30 @@ describe Enemy do
         u = Item.create_item(:diamond)
         s = Item.create_item(:emerald)
 
-        g.set_at(2, 1, player)
+        g.set_at(1, 0, player)
         assert_equal( 400, g.field.length , "gamefield doesnt 400 length")
 
-        g.set_at(0, 0, e)
+        g.set_at(0, 13, e)
         assert_equal( 400, g.field.length , "gamefield doesnt 400 length")
 
         g.set_at(15, 0, e2)
         assert_equal( 400, g.field.length , "gamefield doesnt 400 length")
 
-        g.set_at(10, 12, i)
+        g.set_at(0, 12, i)
         assert_equal( 400, g.field.length , "gamefield doesnt 400 length")
 
-        g.set_at(2, 16, u)
+        g.set_at(2, 15, u)
         assert_equal( 400, g.field.length , "gamefield doesnt 400 length")
 
-        g.set_at(19, 19, s)
+        g.set_at(18, 19, s)
         assert_equal( 400, g.field.length , "gamefield doesnt 400 length")
 
         map = ""
-        x=0
-        y=0
+       # x=0
+        y = 0
         File.open("./res/field.txt", "r") do |file|
           file.each_line do |line|
-          
+        
             x = 0
             line.each_char do |c|
               
@@ -91,13 +91,25 @@ describe Enemy do
               end
               x += 1
             end  
-              y += 1
+            y += 1
           end  
         end 
-        i = e.x  
+        i = e.y
+        t = e.x  
         e.think
-        raise "#{i}, #{e.x}"
-      assert(e.x == i += 1, "He doesnt move only one times!")
+        puts "y:#{i}, #{e.y}"
+        puts "x:#{t}, #{e.x}"
+        if e.think == "d"
+          assert(e.y == i += 1, "He doesnt move only one times! d ") 
+        elsif e.think == "u"
+          assert(e.y == i -= 1, "He doesnt move only one times! u ")
+        elsif e.think == "l"
+          assert(e.x == t -= 1, "He doesnt move only one times! l ") 
+        elsif e.think == "r"
+          assert(e.x == t += 1, "He doesnt move only one times! r ")
+        else
+          raise "nichts"  
+        end  
 
         assert_equal( 400, e.gamefield.field.length , "enemy gamefield doesnt 400 length")
         assert_equal( 400, g.field.length , "gamefield doesnt 400 length")

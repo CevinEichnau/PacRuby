@@ -137,8 +137,9 @@ describe Gamefield do
     end
 
     it "should call #think on each game object once" do
+      
       @objects.each do |obj|
-        obj.should_receive(:think).once
+       obj.should_receive(:think).once
       end
       @field.think
     end

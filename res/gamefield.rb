@@ -99,7 +99,6 @@ class Gamefield
           end
         obj.remember_item(old_obj)
         remove_at(old_obj.x, old_obj.y)
-        #set_at(old_obj.x, old_obj.y, nil)
         return true
       end
     elsif obj.is_a? Player

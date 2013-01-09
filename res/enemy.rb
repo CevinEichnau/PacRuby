@@ -12,6 +12,7 @@ class Enemy < GameObject
 
 
  def think
+  var = ""
   puts "=>#{self.gamefield.field.length}<="
    if self.gamefield.field.length == 400
 
@@ -19,18 +20,22 @@ class Enemy < GameObject
       #puts "=>#{n}<="
       if self.x < n.first 
         self.move_r
+        var =  "r"
       elsif self.x > n.first
         self.move_l
+        var =  "l"
       elsif self.y < n.last
         self.move_d
+        var = "d"
       elsif self.y > n.last
         self.move_u
+        var = "u"
       else
       # do nothing      
       end  
       # do nothing
    end 
-
+   return var 
  end 
 
   def move_u
