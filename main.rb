@@ -1,9 +1,6 @@
-require "./res/gameobject.rb"
-require "./res/enemy.rb"
-require "./res/gamefield.rb"
-require "./res/item.rb"
-require "./res/player.rb"
+require "./init.rb"
 require 'io/console'
+
 
 def read_char
   STDIN.echo = false
@@ -69,7 +66,7 @@ def run
 
   
   puts f.to_string
-  f.think
+  #f.think
 
   def on_game_loop(f, player, e, e2)
     c = read_char
@@ -117,7 +114,7 @@ def run
     puts "#{player.stats}"
     puts f.to_string
 
-
+##############################################
  e_e = f.nearest_decision(e)
  e2_e = f.nearest_decision(e2)
  e3_e = f.nearest_decision(player)
@@ -127,6 +124,7 @@ def run
  puts "ex:#{e2_e.first} ey:#{e2_e.last}\n"
  puts "-"*20
  puts "ex:#{e3_e.first} ey:#{e3_e.last}\n"
+ ############################################
   end
 
   on_game_loop(f, player, e, e2) while(f.win?(player))

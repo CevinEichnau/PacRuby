@@ -153,11 +153,13 @@ class Gamefield
    
   end  
 
-  def think
-    self.field.each do |obj|
-      obj.think if !obj.nil?
-    end
-  end
+ def think
+   self.field.each do |obj|
+     obj.think if !obj.nil?
+
+     #puts  "=>#{obj}<="  if obj.is_a? Enemy
+   end
+ end
 
 
 
@@ -181,6 +183,12 @@ class Gamefield
   end
   
 
+  def create_enemy(x, y)
+    e = Enemy.new
+    e.gamefield = self
+    set_at(x, y, e)
+    return e
+  end
 
 end  
 

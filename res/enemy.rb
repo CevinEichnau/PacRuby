@@ -13,23 +13,19 @@ class Enemy < GameObject
 
  def think
   
-  n =  self.gamefield.nearest_decision(self)
+  #n =  self.gamefield.nearest_decision(self)
   #puts "=>#{n}<="
-  if self.x < n.first 
-    self.move_r
-    
-    unless 
-      puts "think was called !"
-    end
+  #if self.x < n.first 
+  #  self.move_r
   #elsif self.x > n.first
   #  self.move_l
   #elsif self.y < n.last
   #  self.move_d
   #elsif self.y > n.last
   #  self.move_u
-  else
+  #else
   # do nothing      
-  end  
+  #end  
       
  end 
 
