@@ -56,12 +56,12 @@ def run
   u = Item.create_item(:diamond)
   s = Item.create_item(:emerald)
   
-  f.set_at(2, 1, player)
-  f.set_at(4, 6, e)
-  f.set_at(16, 1, e2)
-  f.set_at(10, 12, i)
-  f.set_at(2, 16, u)
-  f.set_at(20, 19, s)
+  f.set_at(0, 1, player)
+  f.set_at(0, 8, e)
+  f.set_at(7, 0, e2)
+  f.set_at(9, 12, i)
+  f.set_at(0, 16, u)
+  f.set_at(19, 18, s)
 
 
   

@@ -27,17 +27,19 @@ class Gamefield
     
     y = 0
     while y < self.size do 
-      y += 1
+      
       x = 0
       string << "#"
       while x < self.size do 
-        x += 1
+       
         if f = get_at(x, y)
           string << f.as_symbol
         else
           string << "  "
         end
+         x += 1
       end
+      y += 1
       string << "#\n"
     end  
     string << "#"*self.size*2 + "##"
@@ -46,21 +48,28 @@ class Gamefield
 
   # Holt ein Objekt an Position x y
   def get_at(x, y)
-    pos = x + self.size * y
+    pos = get_address(x, y)
     self.field[pos]
   end
 
   # Setzt das Objekt an Position x y. Verändert auch die Position am Objekt selbst
   def set_at(x, y, game_object)
-   # raise "Feld ist bereits besetzt:obj:#{game_object} x:#{x} y:#{y}" if get_at(x, y)
-    pos = x + self.size * y
+    raise "Feld ist bereits besetzt:obj:#{game_object} x:#{x} y:#{y}" if get_at(x, y)
+    pos = get_address(x, y)
     self.field[pos] = game_object
     self.field[pos] 
     game_object.place(x, y) if !game_object.nil?
   end
 
+  def get_address(x, y)
+    if x >= 0 && x < self.size && y >= 0 && y < self.size 
+      return x + self.size * y    
+    else  
+      raise "Wrong coordinates! x:#{x} y:#{y}"  
+    end
+  end
+
   def move_object(x, y, obj)
-    
     # ist das Objekt im Spielfeld?
     raise "Objekt nicht im Spielfeld: #{obj} x:#{x} y:#{y}  real position: x: #{obj.x} y: #{obj.y}" if get_at(obj.x, obj.y) != obj
     # berechne die neuen Zielkoordinaten
@@ -75,7 +84,8 @@ class Gamefield
     end
 
     raise "Feld ist besetzt" if get_at(x, y)
-    set_at(obj.x, obj.y, nil)
+    pos = get_address(obj.x, obj.y)
+    self.field[pos] = nil
     set_at(x, y, obj)
   end
 
@@ -88,7 +98,8 @@ class Gamefield
             return false
           end
         obj.remember_item(old_obj)
-        set_at(old_obj.x, old_obj.y, nil)
+        remove_at(old_obj.x, old_obj.y)
+        #set_at(old_obj.x, old_obj.y, nil)
         return true
       end
     elsif obj.is_a? Player
@@ -98,12 +109,12 @@ class Gamefield
           end
           if old_obj.decision == true
             obj.remember_item(old_obj)
-            set_at(old_obj.x, old_obj.y, nil)
+            remove_at(old_obj.x, old_obj.y)
             return true
           end
         obj.points += old_obj.points
         obj.items << old_obj.name
-        set_at(old_obj.x, old_obj.y, nil)
+        remove_at(old_obj.x, old_obj.y)
         return true
       end
     else
@@ -111,6 +122,13 @@ class Gamefield
     end
     return false
   end
+
+  def remove_at(x, y)
+    pos = get_address(x, y)
+    obj = self.field[pos]
+    self.field[pos] = nil
+    return obj
+  end  
 
   def win?(player)
     if player.live == 0
@@ -120,16 +138,18 @@ class Gamefield
   end
 
 
-  def read_file
+  def read_file(path="./res/field.txt")
     map = ""
     x=0
     y=0
-    File.open("./res/field.txt", "r") do |file|
+    self.size= 20
+    File.open(path, "r") do |file|
       file.each_line do |line|
-        y += 1
+        line=line.gsub(/\\n/, "")
+        
         x = 0
         line.each_char do |c|
-          x += 1
+          
 
           
           if c == "#"
@@ -144,9 +164,9 @@ class Gamefield
           d.y = y
           set_at(d.x, d.y, d)
           end
-
+          x += 1
         end  
-
+        y += 1
       end  
 
     end  
@@ -177,11 +197,12 @@ class Gamefield
 
    item = mapped.first[0] 
    
-     item.position
+     item.position  
      
   
   end
   
+
 
   def create_enemy(x, y)
     e = Enemy.new
@@ -190,6 +211,19 @@ class Gamefield
     return e
   end
 
+  def create_player(x, y)
+    e = Player.new
+    e.gamefield = self
+    set_at(x, y, e)
+    return e
+  end
+
+  def create_item(x, y, type)
+    e = Item.create_item(type)
+    e.gamefield = self
+    set_at(x, y, e)
+    return e
+  end
 end  
 
 

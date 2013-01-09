@@ -12,21 +12,25 @@ class Enemy < GameObject
 
 
  def think
-  
-  #n =  self.gamefield.nearest_decision(self)
-  #puts "=>#{n}<="
-  #if self.x < n.first 
-  #  self.move_r
-  #elsif self.x > n.first
-  #  self.move_l
-  #elsif self.y < n.last
-  #  self.move_d
-  #elsif self.y > n.last
-  #  self.move_u
-  #else
-  # do nothing      
-  #end  
-      
+  puts "=>#{self.gamefield.field.length}<="
+   if self.gamefield.field.length == 400
+
+      n =  self.gamefield.nearest_decision(self)
+      #puts "=>#{n}<="
+      if self.x < n.first 
+        self.move_r
+      elsif self.x > n.first
+        self.move_l
+      elsif self.y < n.last
+        self.move_d
+      elsif self.y > n.last
+        self.move_u
+      else
+      # do nothing      
+      end  
+      # do nothing
+   end 
+
  end 
 
   def move_u
