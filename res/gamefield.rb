@@ -59,6 +59,7 @@ class Gamefield
     self.field[pos] = game_object
     self.field[pos] 
     game_object.place(x, y) if !game_object.nil?
+    
   end
 
   def get_address(x, y)
@@ -70,9 +71,11 @@ class Gamefield
   end
 
   def move_object(x, y, obj)
+     
     # ist das Objekt im Spielfeld?
     raise "Objekt nicht im Spielfeld: #{obj} x:#{x} y:#{y}  real position: x: #{obj.x} y: #{obj.y}" if get_at(obj.x, obj.y) != obj
     # berechne die neuen Zielkoordinaten
+
     x += obj.x
     y += obj.y
     
@@ -81,12 +84,19 @@ class Gamefield
       if !continue
         return
       end
+
     end
 
     raise "Feld ist besetzt" if get_at(x, y)
     pos = get_address(obj.x, obj.y)
     self.field[pos] = nil
     set_at(x, y, obj)
+   
+   
+    
+    
+    
+
   end
 
   def check_movement(obj, old_obj)
@@ -173,11 +183,12 @@ class Gamefield
   end  
 
  def think
-   self.field.each do |obj|
-     obj.think if !obj.nil?
-
-     #puts  "=>#{obj}<="  if obj.is_a? Enemy
+   to_update = self.field.select do |obj|
+      obj.is_a? GameObject
    end
+   to_update.each do |obj|
+      obj.think
+   end 
  end
 
 

@@ -96,6 +96,19 @@ describe Gamefield do
       @item.x.should == 3
       @item.y.should == 6
     end
+
+    it "should not duplicate objects after move" do
+      counter = 0 
+      @field.move_object(1, 0, @item)
+      
+      @field.field.each do |obj|
+        if obj.is_a? Enemy
+          counter += 1
+        end 
+      end 
+      
+      assert(counter == 1, "Object duplicated !")  
+    end  
   end
 
   describe "#to_string" do
@@ -164,13 +177,6 @@ describe Gamefield do
           items[entry.name] += 1
         end
       end
-
-
-
-
-
-
-
 
 
 

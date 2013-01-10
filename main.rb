@@ -56,7 +56,7 @@ def run
   u = Item.create_item(:diamond)
   s = Item.create_item(:emerald)
   
-  f.set_at(0, 1, player)
+  f.set_at(6, 5, player)
   f.set_at(0, 8, e)
   f.set_at(7, 0, e2)
   f.set_at(9, 12, i)
@@ -76,19 +76,19 @@ def run
 
     case c
     when "\e[B" # go down
-      if player.y  < f.size 
+      if player.y  < f.size-1 
         y = 1
       end
     when "\e[C" # go right
-      if player.x < f.size
+      if player.x < f.size-1
         x = 1
       end
     when "\e[D" # go left
-      if player.x  > 1
+      if player.x  > 0
         x = -1
       end
     when "\e[A" # go up
-      if player.y  > 1
+      if player.y  > 0
         y = -1
       end
     when "\e"
@@ -105,6 +105,9 @@ def run
 
     # let the enemy update itself
     f.think
+
+    #e.think
+    #e2.think
     #f.set_at(e.x, e.y, e)
 
     # draw the screeen again !!!
@@ -121,9 +124,9 @@ def run
 
  puts "ex:#{e_e.first} ey:#{e_e.last}\n"
  puts "-"*20
- puts "ex:#{e2_e.first} ey:#{e2_e.last}\n"
+ puts "e2x:#{e2_e.first} e2y:#{e2_e.last}\n"
  puts "-"*20
- puts "ex:#{e3_e.first} ey:#{e3_e.last}\n"
+ puts "playerx:#{e3_e.first} playery:#{e3_e.last}\n"
  ############################################
   end
 

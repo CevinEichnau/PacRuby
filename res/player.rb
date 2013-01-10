@@ -28,12 +28,16 @@ class Player < GameObject
     self.dec << item
   end
 
+
   def drop_items
+    to_remove = []
     self.dec.each do |item| 
-      if self.position != item.position 
+      if self.position != item.position
         self.gamefield.set_at(item.x, item.y, item)
+        to_remove << item
       end
     end 
+    self.dec -= to_remove
   end
 
 

@@ -1,6 +1,6 @@
 class GameObject
 
-  attr_accessor :position, :gamefield 
+  attr_accessor :position, :gamefield
 
   def initialize
     @position = [0, 0] 
