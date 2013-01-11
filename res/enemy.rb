@@ -12,102 +12,29 @@ class Enemy < GameObject
 
 
  def think
-  var = ""
-     if self.gamefield.field.length == 400
-     
-      n =  self.gamefield.nearest_decision(self)
-       t = self.items_position.first
-      puts "=>#{t}<==>#{self.position}<="
-     
+  n = Node.new(self.x, self.y)
+  n.evaluate_step(self.gamefield, 5)
+  self.gamefield.evaluateNode(self.x, self.y, self.gamefield.player.x, self.gamefield.player.y)
+  puts "x:#{self.x} y:#{self.y}"
+  puts "x:#{n.node.x} y:#{n.node.y}"
 
-      #puts "=>#{n}<="
-
-      if self.position == t
-        self.chace_player
-      else  
-        if self.x < n.first 
-          #self.move_r
-          self.chace_player
-          var =  "r"
-        elsif self.x > n.first
-          #self.move_l
-          self.chace_player
-          var =  "l"
-        elsif self.y < n.last
-          #self.move_d
-          self.chace_player
-          var = "d"
-        elsif self.y > n.last
-          #self.move_u
-          self.chace_player
-          var = "u"
-        else
-        # do nothing      
-        end 
-      end 
-      # do nothing
-   end 
-   return var 
- end 
-
-
- def chace_player
-  
-  if self.x == self.gamefield.player.x
-    if self.y > self.gamefield.player.y
-      self.move_u
-    elsif self.y < self.gamefield.player.y
+  if self.y != n.node.y
+    if self.y < n.node.y
       self.move_d
-    elsif
-      wall = nil
-      self.gamefield.field.each do |obj|
-        if obj.pickable
-          if obj.y == self.gamefield.player.y
-            if self.x > self.gamefield.player.x
-              self.move_l
-            elsif self.x < self.gamefield.player.x
-              self.move_r
-            end  
-          end  
-        end  
-      end  
-     # if  
-
-      #else 
-      
-      #end  
     else
-      raise "nothing smaller or bigger then x"  
-    end
-
-  elsif self.y == self.gamefield.player.y
-    if self.x > self.gamefield.player.x 
-      self.move_l
-    elsif self.x < self.gamefield.player.x
+      self.move_u
+    end  
+  elsif self.x != n.node.x
+    if self.x < n.node.x
       self.move_r
     else
-      raise "nothing smaller or bigger then y"  
-    end
-
-  else
-    if self.x > self.gamefield.player.x
       self.move_l
-    elsif self.x < self.gamefield.player.x
-      self.move_r
-    else
-      if self.y > self.gamefield.player.y
-        self.move_u
-      elsif self.y < self.gamefield.player.y
-        self.move_d
-      else
-        raise "Iam stupid! no way"
-      end 
     end 
-
   end  
-
  end 
 
+
+ 
   def move_u
     if self.y > 0
       self.gamefield.move_object(0, -1, self) do |old|

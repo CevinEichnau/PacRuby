@@ -18,6 +18,27 @@ class Gamefield
     while self.field.length < a_size.to_i
       self.field << nil 
     end
+  end
+
+  def evaluateNode(x, y, x1, y1)
+    px = self.player.x
+    py = self.player.y
+    dx = x - px
+    dy = y - py
+    wert = 0
+    a1 = Math.sqrt(dx * dx + dy * dy)
+
+    dx = x1 - px
+    dy = y1 - py
+    a2 = Math.sqrt(dx * dx + dy * dy)
+
+
+    if a1 > a2 
+      wert = 10
+    elsif a1 < a2
+      wert = 9
+    end
+    return wert     
   end  
 
 
@@ -224,6 +245,7 @@ class Gamefield
   def create_player(x, y)
     e = Player.new
     e.gamefield = self
+    self.player = e
     set_at(x, y, e)
     return e
   end
