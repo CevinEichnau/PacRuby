@@ -2,6 +2,28 @@ require "spec_helper.rb"
 
 
 describe Gamefield do
+
+describe "#evaluateNode()" do 
+  before :each do 
+    @f = Gamefield.new
+    @f.size = 4
+    @p = @f.create_player(3, 0)
+  end
+
+  it "should return an integer" do
+    value = @f.evaluateNode(1, 2, 0, 2)
+    assert(value.is_a?(Fixnum), "Its dosnt return an interger ")
+  end
+
+  it "should return a right integer" do
+    value = @f.evaluateNode(1, 2, 0, 2)
+    assert(value == 9, "Its dosnt return a right interger ")
+  end
+
+
+
+end  
+
   describe "#size=" do
     it "should resize the field" do
       field = Gamefield.new

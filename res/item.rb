@@ -41,7 +41,7 @@ class Item < GameObject
       result.points = 0
       result.pickable = true  
       result.symbol = ". "
-      result.decision = true
+      result.decision = true    
     else
       raise "unknown item type"
     end
