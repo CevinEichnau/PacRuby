@@ -218,19 +218,20 @@ class Gamefield
   def nearest_decision(enemy)
     dec = self.field.select do |d|
       d.is_a?(Item) && d.decision
-    end  
-  mapped = dec.map do |d|
-      [d, (d.x - enemy.x).abs + (d.y - enemy.y).abs]
-    end 
-   mapped.sort! do |o, p|
-    o[1] <=> p[1]
-   end
+    end
 
-   item = mapped.first[0] 
-   
-     item.position  
-     
-  
+    return nil if dec.empty?
+
+    mapped = dec.map do |d|
+      [d, (d.x - enemy.x).abs + (d.y - enemy.y).abs]
+    end
+
+    mapped.sort! do |o, p|
+      o[1] <=> p[1]
+    end
+
+    item = mapped.first[0]
+    item.position
   end
   
 
